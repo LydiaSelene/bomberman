@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraMove : MonoBehaviour {
+public class PlayerCameraMove : MonoBehaviour {
 
-	public float speed = 6.0F;
-	public float jumpSpeed = 8.0F;
-	public float gravity = 20.0F;
+	public float speed = 3.5F;
+	public float jumpSpeed = 0.0F;
+	//TODO: wasn das fürn Gravitations-Wert ? kraft 20 fail und gewicht 20 auch fail
+	public float gravity = 9.81F;
 	private Vector3 moveDirection = Vector3.zero;
 
-	//rotation um upvector?
+	//rotation um upvector
 	private float yaw = 0.0f;
-	//rotation um right vector?
+	//rotation um right vector
 	private float pitch = 0.0f;
+	//Mausgeschwindigkeit
 	public float speedH = 3.0f;
 	public float speedV = 3.0f;
 
@@ -24,6 +26,14 @@ public class CameraMove : MonoBehaviour {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
+
+			//Blickrichtung soll nicht zu springen führen
+			moveDirection.y = 0;
+
+			//TODO: Blickrichtung soll WSAD-Geschwindigkeit nicht ändern
+			//lösung: prüfung ob forward +-x, +-z hat ?
+
+			//bei leertaste, definierbar ?
 			if (Input.GetButton("Jump"))
 				moveDirection.y = jumpSpeed;
 			

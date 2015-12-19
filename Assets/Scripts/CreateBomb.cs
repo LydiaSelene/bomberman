@@ -1,4 +1,4 @@
-﻿//#version 1.0
+﻿//#version 1.1
 using UnityEngine;
 using System.Collections;
 
@@ -6,19 +6,15 @@ public class CreateBomb : MonoBehaviour {
 
 	public GameObject BombPrefab;
 	public GameObject bomb;
-	public int throwTrust = 40;
+	public int throwTrust = 160;
 
 	// Use this for initialization
 	void Start () {
 	
 	}
 
-	//TODO: Throw Bomb
-
-
 	//IEnumerator nochmal nachlesen
 	private void createGameObject(){
-		print ("createGameObject()");
 
 		//create Bomb before Player
 		GameObject player = GameObject.Find ("Player");
@@ -34,17 +30,19 @@ public class CreateBomb : MonoBehaviour {
 		bomb = GameObject.Instantiate(BombPrefab);
 		bomb.transform.position = spawnPosition;
 		bomb.transform.rotation = Quaternion.identity;
-
+		//TODO: winkel besser
+		bomb.transform.Rotate ((Random.value*70)-(Random.value*70),
+		                       (Random.value*70)-(Random.value*70),
+		                       (Random.value*70)-(Random.value*70));
 		//werfen
 		Rigidbody bombRB = bomb.GetComponent<Rigidbody> ();
 		bombRB.AddForce(player.transform.forward.normalized * throwTrust, ForceMode.Force);
-		print ("Bomb created at "+spawnPosition);
 	}
 	
 	// Update is called once per frame
 	void Update(){
+		//GetKeyDown löst nur 1x aus, wenn gedrückt
 		if (Input.GetKeyDown(KeyCode.Space)){
-			print ("Leertaste");
 			createGameObject();
 		}
 	}

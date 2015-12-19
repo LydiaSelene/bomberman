@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 46e304e9bed28b3499015025f26c6ae8
-timeCreated: 1449333210
+timeCreated: 1449677155
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BombPrefab: {fileID: 157632, guid: 77b335164ad308e43ad829fc1e1323b9, type: 2}
+  - bomb: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

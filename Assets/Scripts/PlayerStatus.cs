@@ -22,7 +22,7 @@ public class PlayerStatus : MonoBehaviour {
 		} else if (lives == 0) {
 			Destroy (GameObject.Find ("Live1")); 
 			GameObject player = GameObject.Find("Player"); 
-			CameraMove cam = player.GetComponent<CameraMove>();
+			PlayerCameraMove cam = player.GetComponent<PlayerCameraMove>();
 			Destroy(cam); 
 			player.transform.Rotate(new Vector3(90, 0, 90));
 		}
