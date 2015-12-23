@@ -80,7 +80,7 @@ public class BombExplosion : MonoBehaviour {
 
 			//zuerst auf SolidBlock und LevelWall prüfen
 			//TODO: zum prüfen von LevelWall muss diese anders behandelt werden (wegen objekt-mittelpunkten, die nicht zum grid passen)
-			if(obj.tag.Equals("SolidBlock") /*|| obj.tag.Equals("LevelWall")*/){
+			if(obj.tag.Equals("SolidBlock") || obj.tag.Equals("LevelBoundary") /*|| obj.tag.Equals("LevelWall")*/){
 				//der explosionsarm kann an dieser Stelle abgebrochen werden
 				//hinter einem SolidBlock wirkt die Explosion nicht
 				//SolidBlock nimmt eine ganze Zelle ein
@@ -91,7 +91,8 @@ public class BombExplosion : MonoBehaviour {
 			}else if(obj.tag.Equals("DestroyableBlock")){
 				//zerstörung des Blocks
 				//Debug.Log ("DestroyableBlock, zerstören");
-				Destroy(obj.gameObject);
+				DestroyableWoodBlock script = obj.GetComponent<DestroyableWoodBlock>();
+				script.destroy (transform.position,explosionRadius, explosionPower, explosionUpModifier);
 
 		    //auf rigid-Bodies prüfen (erstmal allg. alle gleich behandeln)
 			}else if(obj.attachedRigidbody != null){
@@ -100,7 +101,8 @@ public class BombExplosion : MonoBehaviour {
 				//radius+0.5 wegen erreichen des zellenrandes
 				//Debug.Log ("RigidBody, Kraft rauf");
 				obj.attachedRigidbody
-					.AddExplosionForce(explosionPower, transform.position, explosionRadius+0.5f, explosionUpModifier, ForceMode.Force);
+					.AddExplosionForce(explosionPower+((explosionRadius*explosionPower/10)-explosionPower/10), 
+						               transform.position, explosionRadius+0.5f, explosionUpModifier, ForceMode.Force);
 			
 		    // Überprüfung, ob Spieler von Bombe getroffen wurde.
 			//TODO: evtl auch Tag

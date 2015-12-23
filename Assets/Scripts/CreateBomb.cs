@@ -31,9 +31,9 @@ public class CreateBomb : MonoBehaviour {
 		bomb.transform.position = spawnPosition;
 		bomb.transform.rotation = Quaternion.identity;
 		//TODO: winkel besser
-		bomb.transform.Rotate ((Random.value*70)-(Random.value*70),
-		                       (Random.value*70)-(Random.value*70),
-		                       (Random.value*70)-(Random.value*70));
+		bomb.transform.Rotate ((Random.value*80)-(Random.value*80),
+		                       (Random.value*80)-(Random.value*80),
+		                       (Random.value*80)-(Random.value*80));
 		//werfen
 		Rigidbody bombRB = bomb.GetComponent<Rigidbody> ();
 		bombRB.AddForce(player.transform.forward.normalized * throwTrust, ForceMode.Force);
