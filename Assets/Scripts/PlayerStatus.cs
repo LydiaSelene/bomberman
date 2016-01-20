@@ -8,6 +8,11 @@ public class PlayerStatus : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lives = 2; 
+
+		//für spätere Verwendung ?
+		//bomben-eigenschaften
+		//laufen
+		//spezial...
 	}
 	
 	// Update is called once per frame

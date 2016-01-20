@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class BombExplosion : MonoBehaviour {
 	
 	GameObject destroyableBox;
@@ -11,12 +12,19 @@ public class BombExplosion : MonoBehaviour {
 	public float explosionUpModifier;
 	//Rasterzellen-koordinaten, in der die Bombe liegt
 	float xField, yField, zField;
+	public AudioClip explosionSound;
+	AudioSource audio;
 	
 	void Start () {
-		explosionRadius = 1;
+		explosionRadius = 1f;
 		timeToDetonation = 3.0f; 
+		//je radiuspunkt um 5 erhöhen ?
 		explosionPower = 150f;
-		explosionUpModifier = 0.5f;
+		//je radiuspunkt um 0.33 erhöhen ?
+		explosionUpModifier = 0.66f;
+
+		//audio = GetComponent<AudioSource>();
+		//audio.Play();
 
 	}
 
@@ -64,7 +72,7 @@ public class BombExplosion : MonoBehaviour {
 	bool calcExplosionCell (Vector3 pos) {
 		//der radius als umkreisradius, dann werden aber teile außerhalb der quadr. rasterzelle geprüft ->
 		//die gerundete gridposition des objekts muss mit der des explosionsteils abgeglichen werden
-		Collider[] objectsInGridCell = Physics.OverlapBox(pos, new Vector3(0.5f, 0.5f, 0.5f));
+		Collider[] objectsInGridCell = Physics.OverlapBox(pos, new Vector3(0.5f, 1.0f, 0.5f));
 		//Debug.Log ("objectsInGridCell: "+objectsInGridCell.Length);
 		//objekte durchgehen
 		foreach(Collider obj in objectsInGridCell){
@@ -118,14 +126,22 @@ public class BombExplosion : MonoBehaviour {
 	}
 	
 	void OnDestroy() {
+		
+		//explosion abspielen: muss statisch erfolgen, da bereits das gameobject gelöscht wird
+		//TODO: evtl. andere, objektbezogene lösung, um audiosource-einstellungen nutzen zu können
+		//z.b. ein empty erzeugen, was sich nach DepthTextureMode abspielen löscht
+		AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+		//audio = GetComponent<AudioSource>();
+		//audio.PlayOneShot (explosionSound, 1.0f);
+
 		//Rasterzellen-koordinaten, in der die Bombe liegt
 		xField = Mathf.Round (transform.position.x);
 		yField = Mathf.Round (transform.position.y);
 		zField = Mathf.Round (transform.position.z);
 
 		/*
-		notiz: bei bombenexplosion jeden richtungsarm vllt. zellenweise lang prüfen,
-		wenn solidblock, arm abbrechen, dahinter wird nichts mehr betroffen sein
+		notiz: bei bombenexplosion jeden richtungsarm zellenweise lang prüfen,
+		wenn solidblock, arm abbrechen, dahinter ist nichts mehr betroffen
 		-> übersichtlichere struktur ?
 		-> collisions ohne solidblock -> if tag  box -> destroy -> if rigid -> force -> if player -> life
 		 * */
@@ -138,6 +154,7 @@ public class BombExplosion : MonoBehaviour {
 		for (int i=0; i <= explosionRadius; i++) {
 			//bombenposition
 			Vector3 gridPosition = new Vector3 (xField, yField, zField);
+			Debug.Log ("gridPosition: "+gridPosition);
 
 			//in +-x und +-z relativ zur bombe prüfen
 			//x positiv (Explosionsarm)
