@@ -26,7 +26,7 @@ public class visualExplosionSphere : MonoBehaviour {
 			thisTransform.localScale = vec;
 		}
 
-		if (vec.x > 0.8 && col.a > 0) {
+		if (vec.x > 0.5 && col.a > 0) {
 			col.a -= 0.08f;
 			mat.SetColor ("_Color", col);
 
