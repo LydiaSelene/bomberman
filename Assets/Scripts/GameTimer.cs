@@ -9,7 +9,7 @@ public class GameTimer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		time = 15;
+		time = 300;
 
 		//die angegebene Funktion wird nach a sekunden aufgerufen und ab da alle b sekunden wieder
 		InvokeRepeating("actualizeVisualCounter", 1, 1);

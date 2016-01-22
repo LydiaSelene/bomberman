@@ -72,7 +72,7 @@ public class BombExplosion : MonoBehaviour {
 	bool calcExplosionCell (Vector3 pos) {
 		//der radius als umkreisradius, dann werden aber teile außerhalb der quadr. rasterzelle geprüft ->
 		//die gerundete gridposition des objekts muss mit der des explosionsteils abgeglichen werden
-		Collider[] objectsInGridCell = Physics.OverlapBox(pos, new Vector3(0.5f, 1.0f, 0.5f));
+		Collider[] objectsInGridCell = Physics.OverlapBox(pos, new Vector3(0.5f, 0.5f, 0.5f));
 		//Debug.Log ("objectsInGridCell: "+objectsInGridCell.Length);
 		//objekte durchgehen
 		foreach(Collider obj in objectsInGridCell){
@@ -109,7 +109,7 @@ public class BombExplosion : MonoBehaviour {
 				//radius+0.5 wegen erreichen des zellenrandes
 				//Debug.Log ("RigidBody, Kraft rauf");
 				obj.attachedRigidbody
-					.AddExplosionForce(explosionPower+((explosionRadius*explosionPower/10)-explosionPower/10), 
+					.AddExplosionForce(explosionPower, 
 						               transform.position, explosionRadius+0.5f, explosionUpModifier, ForceMode.Force);
 			
 		    // Überprüfung, ob Spieler von Bombe getroffen wurde.
@@ -136,8 +136,10 @@ public class BombExplosion : MonoBehaviour {
 
 		//Rasterzellen-koordinaten, in der die Bombe liegt
 		xField = Mathf.Round (transform.position.x);
-		yField = Mathf.Round (transform.position.y);
+		yField = Mathf.Floor (transform.position.y);
 		zField = Mathf.Round (transform.position.z);
+		//damit die Mitte der 3D-Zelle zählt
+		yField += 0.5f;
 
 		/*
 		notiz: bei bombenexplosion jeden richtungsarm zellenweise lang prüfen,
