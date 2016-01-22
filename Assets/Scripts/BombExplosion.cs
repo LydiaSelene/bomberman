@@ -122,6 +122,7 @@ public class BombExplosion : MonoBehaviour {
 				Debug.Log ("Attention! I dont know what to do with this object: "+obj );
 			}
 		}
+
 		return true;
 	}
 	

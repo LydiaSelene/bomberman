@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Levellogic : MonoBehaviour {
 
-	int destroyed = 0;
+	int destroyedRigids = 0;
+
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +18,10 @@ public class Levellogic : MonoBehaviour {
 		foreach (Rigidbody rigid in rigids) {
 			if(rigid.transform.position.y < 0){
 				Destroy(rigid.gameObject);
-				destroyed += 1;
+				destroyedRigids += 1;
 			}
 		}
-		Debug.Log (destroyed+" Rigid-Objekte schon gelöscht.");
+		Debug.Log (destroyedRigids+" Rigid-Objekte schon gelöscht.");
 	}
 	
 	// Update is called once per frame

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Map_Classic : MonoBehaviour {
 
+
+
 	// Use this for initialization
 	void Start () {
 	
