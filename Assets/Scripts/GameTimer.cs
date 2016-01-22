@@ -1,0 +1,50 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+
+public class GameTimer : MonoBehaviour {
+
+	public Text timeText;
+	float time;
+
+	// Use this for initialization
+	void Start () {
+		time = 300;
+
+		//die angegebene Funktion wird nach a sekunden aufgerufen und ab da alle b sekunden wieder
+		InvokeRepeating("actualizeVisualCounter", 1, 1);
+	}
+
+	void actualizeVisualCounter() {
+		if (time <= 0) {
+			//do
+		} else {
+			time -= 1;
+
+			float minutes = time / 60 - (time / 60 % 1);
+			float seconds = time % 60;
+
+			timeText.text = ""+minutes+":"+seconds;
+			//timeText.text = string.Format ("{0:00}:{1:00}", minutes, seconds);
+		}
+			
+	}
+
+
+	// Update is called once per frame
+	void Update () {
+		/*
+		if (time <= 0) {
+			//do
+		} else {
+			time -= 1*Time.deltaTime;
+
+			float minutes = time / 60 - (time / 60 % 1);
+			float seconds = time % 60 - (time % 60 % 1);
+
+			timeText.text = ""+minutes+":"+seconds;
+			//timeText.text = string.Format ("{0:00}:{1:00}", minutes, seconds);
+		}
+		*/
+	}
+}
