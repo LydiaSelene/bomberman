@@ -30,7 +30,6 @@ public class CreateBomb : MonoBehaviour {
 		bomb = GameObject.Instantiate(BombPrefab);
 		bomb.transform.position = spawnPosition;
 		bomb.transform.rotation = Quaternion.identity;
-		//TODO: winkel besser
 		bomb.transform.Rotate ((Random.value*80)-(Random.value*80),
 		                       (Random.value*80)-(Random.value*80),
 		                       (Random.value*80)-(Random.value*80));
