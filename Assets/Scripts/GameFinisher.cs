@@ -5,6 +5,11 @@ public class GameFinisher : MonoBehaviour {
 
 	public GameObject bombPrefab;
 	float time;
+	//Die Werte werden vom individuellen Mapscript, z.b. Map_Classic.cs, gesetzt.
+	public float mapAreaPosX, 
+				 mapAreaNegX, 
+				 mapAreaPosZ, 
+				 mapAreaNegZ;
 
 	// Use this for initialization
 	void Start () {
@@ -51,8 +56,8 @@ public class GameFinisher : MonoBehaviour {
 
 
 	void generateFallingBomb(){
-		float xPos = Random.Range(-5.4f, 5.4f);
-		float zPos = Random.Range(-6.4f, 6.4f);
+		float xPos = Random.Range(mapAreaNegX, mapAreaPosX);
+		float zPos = Random.Range(mapAreaNegX, mapAreaPosX);
 		GameObject bomb = GameObject.Instantiate(bombPrefab);
 		bomb.transform.position = new Vector3 (xPos, 8, zPos);
 		bomb.transform.rotation = Random.rotation;

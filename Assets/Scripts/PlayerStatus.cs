@@ -12,7 +12,7 @@ public class PlayerStatus : MonoBehaviour {
 	void Start () {
 		lives = 2; 
 
-		bombRadius = 10f;
+		bombRadius = 1f;
 
 	}
 
