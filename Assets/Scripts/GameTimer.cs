@@ -7,12 +7,17 @@ public class GameTimer : MonoBehaviour {
 	public Text timeText;
 	float time;
 
+	//wir aufgerufen, wenn eine Instanz geladen wird, läuft noch vor start(),
+	//ignoriert, aber wohl Deaktivierung auf dem Objekt in Unity.
+	void Awake(){
+
+	}
+
 	// Use this for initialization
 	void Start () {
 		time = 300;
-
 		//die angegebene Funktion wird nach a sekunden aufgerufen und ab da alle b sekunden wieder
-		InvokeRepeating("actualizeVisualCounter", 1, 1);
+		InvokeRepeating("actualizeVisualCounter", 0, 1);
 	}
 
 	void actualizeVisualCounter() {

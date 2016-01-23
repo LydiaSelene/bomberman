@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CreateBomb : MonoBehaviour {
+public class ThrowBomb : MonoBehaviour {
 
 	public GameObject BombPrefab;
 	public GameObject bomb;
@@ -16,6 +16,8 @@ public class CreateBomb : MonoBehaviour {
 	//IEnumerator nochmal nachlesen
 	private void createGameObject(){
 
+		//TODO: checken, was z.b. playerStat sagt, ob normale Bombe, oder was anderes ?
+
 		//create Bomb before Player
 		GameObject player = GameObject.Find ("Player");
 
@@ -27,15 +29,16 @@ public class CreateBomb : MonoBehaviour {
 		spawnPosition += player.transform.forward.normalized/2;
 
 		//ein prefab in der szene erzeugen
-		bomb = GameObject.Instantiate(BombPrefab);
-		bomb.transform.position = spawnPosition;
-		bomb.transform.rotation = Quaternion.identity;
-		bomb.transform.Rotate ((Random.value*80)-(Random.value*80),
-		                       (Random.value*80)-(Random.value*80),
-		                       (Random.value*80)-(Random.value*80));
+		bomb = (GameObject) GameObject.Instantiate(BombPrefab, spawnPosition, Quaternion.identity);
+		bomb.transform.Rotate (	Random.value*Random.Range (-80, 80), 
+								Random.value*Random.Range (-80, 80),
+								Random.value*Random.Range (-80, 80));
 		//werfen
 		Rigidbody bombRB = bomb.GetComponent<Rigidbody> ();
 		bombRB.AddForce(player.transform.forward.normalized * throwTrust, ForceMode.Force);
+
+		//bomb.SendMessage("setOwningPlayerStatus", GetComponent<PlayerStatus>(), SendMessageOptions.RequireReceiver);
+		bomb.SendMessage("setBombRadius", GetComponent<PlayerStatus>().getBombRadius(), SendMessageOptions.RequireReceiver);
 	}
 	
 	// Update is called once per frame

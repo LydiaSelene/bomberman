@@ -3,25 +3,22 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour {
 
-	public int lives; 
+	int lives; 
+	//nur Ganzzahlen!
+	float bombRadius;
+
 
 	// Use this for initialization
 	void Start () {
 		lives = 2; 
 
-		//für spätere Verwendung ?
-		//bomben-eigenschaften
-		//laufen
-		//spezial...
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		bombRadius = 10f;
+
 	}
 
 	public void OnHit() {
 		lives = lives - 1;
+		//TODO: zu statisch!
 		if (lives == 1) {
 			Destroy(GameObject.Find("Live2"));
 		} else if (lives == 0) {
@@ -32,4 +29,26 @@ public class PlayerStatus : MonoBehaviour {
 			player.transform.Rotate(new Vector3(90, 0, 90));
 		}
 	}
+
+	//BombExplosion.cs soll sich z.B. die aktuellen Bombeneigenschaften holen, die Items ja ändern können.
+	public float getBombRadius(){
+		return bombRadius;
+	}
+
+	//Z.b. Items ändern evtl. den Radius.
+	public void setBombRadius(float radius){
+		bombRadius = radius;
+		if (bombRadius > 10) {
+			bombRadius = 10;
+		} else if (bombRadius < 1) {
+			bombRadius = 1;
+		}
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+
 }
