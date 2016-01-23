@@ -4,7 +4,7 @@ using System.Collections;
 public class visualExplosionSphere : MonoBehaviour {
 
 	Transform thisTransform;
-	public Renderer rend;
+	Renderer rend;
 
 	// Use this for initialization
 	void Start () {
