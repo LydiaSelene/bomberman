@@ -9,15 +9,12 @@ public class Bomberman_Player1 : MonoBehaviour {
 	public float speed = 3.5f;
 	public float gravity = 9.81F;
 	public int throwTrust = 160, numberBombs = 0, maxBombs = 1;
-	int lives;
 	public GameObject BombPrefab;
 	float detonationTime = 3.0f, timeBetweenBombThrows = 1.0f; 
-	float bombRadius = 1.0f; 
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
-		lives = 2; 
 	}
 	
 	// Update is called once per frame
@@ -83,16 +80,7 @@ public class Bomberman_Player1 : MonoBehaviour {
 		bombRB.AddForce(gameObject.transform.forward.normalized * throwTrust, ForceMode.Force);
 
 		//bomb.SendMessage("setOwningPlayerStatus", GetComponent<PlayerStatus>(), SendMessageOptions.RequireReceiver);
-		bomb.SendMessage("setBombRadius", bombRadius, SendMessageOptions.RequireReceiver);
-	}
-
-	public void setBombRadius(float radius){
-		bombRadius = radius;
-		if (bombRadius > 10) {
-			bombRadius = 10;
-		} else if (bombRadius < 1) {
-			bombRadius = 1;
-		}
+		bomb.SendMessage("setBombRadius", GetComponent<PlayerStatus>().getBombRadius(), SendMessageOptions.RequireReceiver);
 	}
 
 	public void setWinnerText() {
@@ -102,13 +90,5 @@ public class Bomberman_Player1 : MonoBehaviour {
 		content.enabled = true;
 	}
 
-	public void OnHit() {
-		lives = lives - 1;
-		if (lives == 1) {
-			Destroy(GameObject.Find("Live2"));
-		} else if (lives == 0) {
-			Destroy (GameObject.Find ("Live1")); 
-			setWinnerText ();
-		}
-	}
+
 }
