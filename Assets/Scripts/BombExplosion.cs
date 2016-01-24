@@ -113,14 +113,15 @@ public class BombExplosion : MonoBehaviour {
 						               transform.position, explosionRadius+0.5f, explosionUpModifier, ForceMode.Force);
 			
 		    // Überprüfung, ob Spieler von Bombe getroffen wurde.
-			}else if(obj.name.Equals("Bomberman_Player1")){
-				Bomberman_Player1 player =  obj.GetComponent<Bomberman_Player1>();
-				player.OnHit();
+			//TODO: evtl auch Tag
+			}else if(obj.tag.Equals("Player")){
+				PlayerStatus status =  obj.GetComponent<PlayerStatus>();
+				status.OnHit("Bomb");
 
-			}else if(obj.name.Equals("Bomberman_Player2")){
-				Bomberman_Player2 player =  obj.GetComponent<Bomberman_Player2>();
-				player.OnHit();
-
+			}else if(obj.tag.Equals("Enemy_AI")){
+				SimpleAI ai =  obj.GetComponent<SimpleAI>();
+				ai.OnHit();
+				
 			}else{
 				Debug.Log ("Attention! I dont know what to do with this object: "+obj );
 			}

@@ -14,19 +14,19 @@ public class ThrowBomb : MonoBehaviour {
 	}
 
 	//IEnumerator nochmal nachlesen
-	public void createGameObject(){
+	private void createGameObject(){
 
 		//TODO: checken, was z.b. playerStat sagt, ob normale Bombe, oder was anderes ?
 
 		//create Bomb before Player
-		//GameObject player = GameObject.Find ("Player");
+		GameObject player = GameObject.Find ("RigidBomberman");
 
 		//calculate spawn position
-		Vector3 spawnPosition = gameObject.transform.position;
+		Vector3 spawnPosition = player.transform.position;
 		//+ 1/4 player height (höhe auf Brust, statt Bauch)
-		spawnPosition.y += gameObject.transform.lossyScale.y / 4;
+		spawnPosition.y += player.transform.lossyScale.y / 4;
 		//+ x in forward dir, bomb before playr
-		spawnPosition += gameObject.transform.forward.normalized/2;
+		spawnPosition += player.transform.forward.normalized/2;
 
 		//ein prefab in der szene erzeugen
 		bomb = (GameObject) GameObject.Instantiate(BombPrefab, spawnPosition, Quaternion.identity);
@@ -35,7 +35,7 @@ public class ThrowBomb : MonoBehaviour {
 								Random.value*Random.Range (-80, 80));
 		//werfen
 		Rigidbody bombRB = bomb.GetComponent<Rigidbody> ();
-		bombRB.AddForce(gameObject.transform.forward.normalized * throwTrust, ForceMode.Force);
+		bombRB.AddForce(player.transform.forward.normalized * throwTrust, ForceMode.Force);
 
 		//bomb.SendMessage("setOwningPlayerStatus", GetComponent<PlayerStatus>(), SendMessageOptions.RequireReceiver);
 		bomb.SendMessage("setBombRadius", GetComponent<PlayerStatus>().getBombRadius(), SendMessageOptions.RequireReceiver);
@@ -44,8 +44,8 @@ public class ThrowBomb : MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 		//GetKeyDown löst nur 1x aus, wenn gedrückt
-		//if (Input.GetKeyDown(KeyCode.Space)){
-		//	createGameObject();
-		//}
+		if (Input.GetKeyDown(KeyCode.Space)){
+			createGameObject();
+		}
 	}
 }

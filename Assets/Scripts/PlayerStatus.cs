@@ -6,7 +6,9 @@ public class PlayerStatus : MonoBehaviour {
 	int lives; 
 	//nur Ganzzahlen!
 	float bombRadius;
-
+	public AudioClip dyingSound;
+	public AudioClip biteDamageSound;
+	public AudioClip bombDamageSound;
 
 	// Use this for initialization
 	void Start () {
@@ -16,12 +18,18 @@ public class PlayerStatus : MonoBehaviour {
 
 	}
 
-	public void OnHit() {
+	public void OnHit(string cause) {
+		if (cause.Equals ("SimpleAI")) {
+			AudioSource.PlayClipAtPoint(biteDamageSound, transform.position);
+		}else if(cause.Equals ("Bomb")){
+			AudioSource.PlayClipAtPoint(bombDamageSound, transform.position);
+		}
 		lives = lives - 1;
 		//TODO: zu statisch!
 		if (lives == 1) {
 			Destroy(GameObject.Find("Live2"));
 		} else if (lives == 0) {
+			AudioSource.PlayClipAtPoint(dyingSound, transform.position);
 			Destroy (GameObject.Find ("Live1")); 
 			GameObject player = GameObject.Find("Player"); 
 			PlayerCameraMove cam = player.GetComponent<PlayerCameraMove>();
