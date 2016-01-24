@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerStatus : MonoBehaviour {
@@ -11,18 +12,33 @@ public class PlayerStatus : MonoBehaviour {
 	public AudioClip bombDamageSound;
 	string live1;
 	string live2;
+	string winningText;
+	float quitTime;
+	bool quitGame;
+	GameObject spFlag;
 
 	// Use this for initialization
 	void Start () {
 		lives = 2; 
 		bombRadius = 1f;
+		quitTime = 5.0f; 
+		quitGame = false; 
+		spFlag = GameObject.Find ("SinglePlayerFlag");
+		Debug.Log (spFlag); 
 
 		if(gameObject.name.Equals("Bomberman_Player1")){
 			live1="Live1";
 			live2 = "Live2";
+
+			if (spFlag == null) {
+				winningText = "Player 2 wins";
+			} else {
+				winningText = "You are blobed!";
+			}
 		}else if(gameObject.name.Equals("Bomberman_Player2")){
 			live1="Live3";
 			live2 = "Live4";
+			winningText = "Player 1 wins";
 		}
 
 	}
@@ -34,14 +50,17 @@ public class PlayerStatus : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(bombDamageSound, transform.position);
 		}
 		lives = lives - 1;
-		//TODO: zu statisch!
 		if (lives == 1) {
 			Destroy(GameObject.Find(live1));
 		} else if (lives == 0) {
 			AudioSource.PlayClipAtPoint(dyingSound, transform.position);
 			Destroy (GameObject.Find (live2)); 
-			Destroy(gameObject); 
-			gameObject.transform.Rotate(new Vector3(90, 0, 90));
+			//gameObject.transform.Rotate(new Vector3(90, 0, 90));
+			quitGame = true; 
+			GameObject winnerText = GameObject.Find ("WinnerText");
+			Text text = winnerText.GetComponent<Text> ();
+			text.text = winningText;
+			text.enabled = true; 
 		}
 	}
 
@@ -59,11 +78,26 @@ public class PlayerStatus : MonoBehaviour {
 			bombRadius = 1;
 		}
 	}
+
+	void spWin() {
+		GameObject winnerText = GameObject.Find ("WinnerText");
+		Text text = winnerText.GetComponent<Text> ();
+		text.text = "You win!";
+		text.enabled = true; 
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (spFlag != null && GameObject.FindWithTag ("Enemy_AI") == null) {
+			quitGame = true; 
+			spWin (); 
+		}
+
+		if (quitGame) {
+			quitTime -= (Time.deltaTime % 60); 
+			if (quitTime <= 0) {
+				Application.Quit (); 
+			} 
+		}
 	}
-
-
 }
