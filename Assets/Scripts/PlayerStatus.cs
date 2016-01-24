@@ -9,12 +9,21 @@ public class PlayerStatus : MonoBehaviour {
 	public AudioClip dyingSound;
 	public AudioClip biteDamageSound;
 	public AudioClip bombDamageSound;
+	string live1;
+	string live2;
 
 	// Use this for initialization
 	void Start () {
 		lives = 2; 
-
 		bombRadius = 1f;
+
+		if(gameObject.name.Equals("Bomberman_Player1")){
+			live1="Live1";
+			live2 = "Live2";
+		}else if(gameObject.name.Equals("Bomberman_Player2")){
+			live1="Live3";
+			live2 = "Live4";
+		}
 
 	}
 
@@ -27,14 +36,12 @@ public class PlayerStatus : MonoBehaviour {
 		lives = lives - 1;
 		//TODO: zu statisch!
 		if (lives == 1) {
-			Destroy(GameObject.Find("Live2"));
+			Destroy(GameObject.Find(live1));
 		} else if (lives == 0) {
 			AudioSource.PlayClipAtPoint(dyingSound, transform.position);
-			Destroy (GameObject.Find ("Live1")); 
-			GameObject player = GameObject.Find("Player"); 
-			PlayerCameraMove cam = player.GetComponent<PlayerCameraMove>();
-			Destroy(cam); 
-			player.transform.Rotate(new Vector3(90, 0, 90));
+			Destroy (GameObject.Find (live2)); 
+			Destroy(gameObject); 
+			gameObject.transform.Rotate(new Vector3(90, 0, 90));
 		}
 	}
 

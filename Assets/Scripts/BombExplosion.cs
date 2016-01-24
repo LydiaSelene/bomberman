@@ -114,7 +114,11 @@ public class BombExplosion : MonoBehaviour {
 			
 		    // Überprüfung, ob Spieler von Bombe getroffen wurde.
 			//TODO: evtl auch Tag
-			}else if(obj.tag.Equals("Player")){
+			}else if(obj.name.Equals("Bomberman_Player1")){
+				PlayerStatus status =  obj.GetComponent<PlayerStatus>();
+				status.OnHit("Bomb");
+
+			}else if(obj.name.Equals("Bomberman_Player2")){
 				PlayerStatus status =  obj.GetComponent<PlayerStatus>();
 				status.OnHit("Bomb");
 
