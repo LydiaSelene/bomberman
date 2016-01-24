@@ -7,6 +7,7 @@ public class Bomberman : MonoBehaviour {
 	Vector3 moveDirection;
 	public float speed = 3.5f;
 	public float gravity = 9.81F;
+	float yaw, pitch;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +17,13 @@ public class Bomberman : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Bewegung vor und zurück mit Animation
-		float move = Input.GetAxis ("Vertical");
-		anim.SetFloat ("Speed", move); 
+		anim.SetFloat ("Speed", Input.GetAxis ("Vertical")); 
 
-		float sideMove = Input.GetAxis ("Horizontal");
-		anim.SetFloat ("SideSpeed", sideMove); 
+		// Starten der Animation zum Seitwärtslaufen
+		anim.SetFloat ("SideSpeed", Input.GetAxis ("Horizontal")); 
+
+		// Starten der Animation zum Bombenwurf
+		anim.SetBool ("Throw", Input.GetButton ("Jump")); 
 
 		CharacterController controller = GetComponent<CharacterController>();
 		if (controller.isGrounded) {
@@ -30,12 +33,11 @@ public class Bomberman : MonoBehaviour {
 		}
 
 		// Rotation der Spielfigur
-		float rotation = Input.GetAxis ("Mouse X");
-		gameObject.transform.RotateAround (gameObject.transform.position, Vector3.up, rotation); 
-
-		// Für eventuell zum Bomben werfen
-		bool throwing = Input.GetButton ("Jump");
-		anim.SetBool ("Throw", throwing); 
+		float camHorizontal = Input.GetAxis ("Mouse X");
+		// Schwellenwerte für Controller-Input
+		if (camHorizontal >= 0.5 || camHorizontal <= -0.5) {
+			gameObject.transform.RotateAround (gameObject.transform.position, Vector3.up, camHorizontal * 5); 
+		}
 
 		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
