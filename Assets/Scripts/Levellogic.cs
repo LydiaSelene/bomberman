@@ -10,7 +10,7 @@ public class Levellogic : MonoBehaviour {
 	void Start () {
 	
 		//die angegebene Funktion wird nach 60s aufgerufen und ab da alle 60 sekunden wieder
-		InvokeRepeating("deleteRigidsBelowGround", 60, 60);
+		InvokeRepeating("deleteRigidsBelowGround", 30, 30);
 	}
 
 	void deleteRigidsBelowGround(){

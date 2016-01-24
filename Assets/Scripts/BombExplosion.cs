@@ -114,10 +114,14 @@ public class BombExplosion : MonoBehaviour {
 			
 		    // Überprüfung, ob Spieler von Bombe getroffen wurde.
 			//TODO: evtl auch Tag
-			}else if(obj.name.Equals("Player")){
+			}else if(obj.tag.Equals("Player")){
 				PlayerStatus status =  obj.GetComponent<PlayerStatus>();
-				status.OnHit();
+				status.OnHit("Bomb");
 
+			}else if(obj.tag.Equals("Enemy_AI")){
+				SimpleAI ai =  obj.GetComponent<SimpleAI>();
+				ai.OnHit();
+				
 			}else{
 				Debug.Log ("Attention! I dont know what to do with this object: "+obj );
 			}

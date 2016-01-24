@@ -19,7 +19,7 @@ public class ThrowBomb : MonoBehaviour {
 		//TODO: checken, was z.b. playerStat sagt, ob normale Bombe, oder was anderes ?
 
 		//create Bomb before Player
-		GameObject player = GameObject.Find ("Player");
+		GameObject player = GameObject.Find ("RigidBomberman");
 
 		//calculate spawn position
 		Vector3 spawnPosition = player.transform.position;

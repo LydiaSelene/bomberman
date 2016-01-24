@@ -45,16 +45,6 @@ public class GameFinisher : MonoBehaviour {
 
 	}
 
-	//funktioiert nicht, es fallen keine bomben
-	IEnumerator MyCoroutine(){
-		int amount = Random.Range (1, 10);
-		for (int i = 0; i < amount; i++) {
-			generateFallingBomb ();
-			yield return new WaitForSeconds(0.1f);
-		}
-	}
-
-
 	void generateFallingBomb(){
 		float xPos = Random.Range(mapAreaNegX, mapAreaPosX);
 		float zPos = Random.Range(mapAreaNegX, mapAreaPosX);
@@ -64,6 +54,7 @@ public class GameFinisher : MonoBehaviour {
 		Rigidbody rid = bomb.GetComponent<Rigidbody> ();
 		rid.AddTorque(new Vector3(Random.Range(-1,1), Random.Range(-1,1), Random.Range(-1,1)), ForceMode.Impulse);
 		rid.AddForce(new Vector3(Random.Range(-5,5), Random.Range(-5,0), Random.Range(-5,5)), ForceMode.Impulse );
+		bomb.SendMessage("setBombRadius", 1f, SendMessageOptions.RequireReceiver);
 	}
 		
 	
