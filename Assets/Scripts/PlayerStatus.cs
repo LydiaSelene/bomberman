@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerStatus : MonoBehaviour {
@@ -24,7 +25,6 @@ public class PlayerStatus : MonoBehaviour {
 		quitTime = 5.0f; 
 		quitGame = false; 
 		spFlag = GameObject.Find ("SinglePlayerFlag");
-		Debug.Log (spFlag); 
 
 		if(gameObject.name.Equals("Bomberman_Player1")){
 			live1="Live1";
@@ -41,6 +41,10 @@ public class PlayerStatus : MonoBehaviour {
 			winningText = "Player 1 wins";
 		}
 
+	}
+
+	public void powerUp() {
+		bombRadius++; 
 	}
 
 	public void OnHit(string cause) {
@@ -96,7 +100,7 @@ public class PlayerStatus : MonoBehaviour {
 		if (quitGame) {
 			quitTime -= (Time.deltaTime % 60); 
 			if (quitTime <= 0) {
-				Application.Quit (); 
+				SceneManager.LoadScene ("Menu"); 
 			} 
 		}
 	}
